@@ -5,7 +5,7 @@ class TimestampedModel(models.Model):
     created_at=models.DateTimeField(auto_now_add=True,verbose_name="created at")
     updated_at=models.DateTimeField(auto_now=True,verbose_name="updated at")
 
-    class meta:
+    class Meta:
         abstract=True 
 
 class User(AbstractUser,TimestampedModel):
