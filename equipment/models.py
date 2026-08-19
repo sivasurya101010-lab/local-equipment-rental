@@ -3,6 +3,23 @@ from django.db import models
 from users.models import TimestampedModel
 
 
+class EquipmentUnitManager(models.Manager):
+    def available(self):
+        return self.filter(status=EquipmentUnit.Status.AVAILABLE)
+
+    def reserved(self):
+        return self.filter(status=EquipmentUnit.Status.RESERVED)
+
+    def rented(self):
+        return self.filter(status=EquipmentUnit.Status.RENTED)
+
+    def in_inspection(self):
+        return self.filter(status=EquipmentUnit.Status.INSPECTION)
+
+    def in_maintenance(self):
+        return self.filter(status=EquipmentUnit.Status.MAINTENANCE)
+
+
 class Equipment(TimestampedModel):
     name=models.CharField(max_length=150,verbose_name="equipment name")
 
@@ -41,5 +58,8 @@ class EquipmentUnit(TimestampedModel):
 
     notes = models.TextField(blank=True,verbose_name="unit notes")
 
+    objects = EquipmentUnitManager()
+
     def __str__(self):
         return f"{self.equipment.name} - {self.serial_number}"
+
